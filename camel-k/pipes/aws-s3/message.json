@@ -1,0 +1,4 @@
+{
+  "client": "aws-s3",
+  "message": "Hello from AWS S3"
+}
