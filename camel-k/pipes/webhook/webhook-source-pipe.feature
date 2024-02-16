@@ -5,17 +5,21 @@ Feature: Webhook source pipe
     And Knative service port 8081
     And Knative service "knative-service"
     And Knative event consumer timeout is 5000 ms
-    And create Knative event consumer service knative-service
 
   Scenario: Should create event from webhook source
+    Given create Knative event consumer service knative-service with target port 8081
+    Given create Knative trigger yaks-trigger on service knative-service with filter on attributes
+      | type | org.apache.camel.event.messages |
     # Start Pipe
     Given load Pipe webhook-source-pipe.yaml
     Then Camel K integration webhook-source-pipe should be running
+    And Camel K integration webhook-source-pipe should print Routes startup
     # Invoke webhook
-    Given URL: http://localhost:8080/chat
+    Given URL: yaks:resolveURL('webhook-source-pipe','8080')
     And HTTP request query parameter message="yaks:urlEncode('Hello from webhook-pipe!')"
     And HTTP request header Content-Type="application/json"
-    When send GET
+    When send GET /chat
+    And Camel K integration webhook-source-pipe should print Hello from webhook-pipe!
     # Verify Knative event
     Then expect Knative event data
     """

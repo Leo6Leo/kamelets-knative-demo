@@ -36,6 +36,8 @@ config:
         value: 4.2.0
       - name: YAKS_TESTCONTAINERS_AUTO_REMOVE_RESOURCES
         value: false
+      - name: YAKS_HTTP_HEADER_NAME_IGNORE_CASE
+        value: true
       - name: CITRUS_TYPE_CONVERTER
         value: camel
     resources:

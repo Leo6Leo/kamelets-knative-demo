@@ -38,10 +38,13 @@ config:
         value: false
       - name: CITRUS_TYPE_CONVERTER
         value: camel
+      - name: YAKS_HTTP_HEADER_NAME_IGNORE_CASE
+        value: true
       - name: YAKS_CAMELK_SUPPORT_VARIABLES_IN_SOURCES
         value: false
     resources:
       - webhook-source.groovy
+      - webhook-source.yaml
     cucumber:
       tags:
         - "not @ignored"

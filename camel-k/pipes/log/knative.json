@@ -4,7 +4,7 @@
       "type": "event",
       "name": "org.apache.camel.event.messages",
       "endpointKind": "source",
-      "path": "/events/org.apache.camel.event.messages",
+      "path": "/",
       "objectApiVersion": "eventing.knative.dev/v1",
       "objectKind": "Broker",
       "objectName": "default",

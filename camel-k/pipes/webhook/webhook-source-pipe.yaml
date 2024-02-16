@@ -50,3 +50,4 @@ spec:
       name: default
     properties:
       type: org.apache.camel.event.messages
+      ce.override.ce-source: org.apache.camel

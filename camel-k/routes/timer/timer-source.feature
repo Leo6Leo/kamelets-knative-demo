@@ -4,8 +4,10 @@ Feature: Timer source
     Given create Knative broker default
     And Knative service port 8080
     And Knative service "knative-service"
-    And Knative event consumer timeout is 5000 ms
-    And create Knative event consumer service knative-service
+    And Knative event consumer timeout is 10000 ms
+    And create Knative event consumer service knative-service with target port 8080
+    Given create Knative trigger yaks-trigger on service knative-service with filter on attributes
+      | type | org.apache.camel.event.messages |
 
   Scenario Outline: Should create event from <integration-source>.<language>
     # Start Pipe
