@@ -19,8 +19,6 @@ apiVersion: camel.apache.org/v1
 kind: Pipe
 metadata:
   name: translate-pipe
-  annotations:
-    trait.camel.apache.org/mount.configs: "configmap:translate-service-config"
 spec:
   source:
     ref:
@@ -30,15 +28,39 @@ spec:
     properties:
       period: 5000
       message: |
-        Guten Morgen, mein Name ist Christoph!
+        { "client": "yaks-test", "message": "Hello from yaks-test!" }
   steps:
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1
+        name: extract-field-action
+      properties:
+        field: client
+        headerOutput: true
+        headerOutputName: client
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1
+        name: extract-field-action
+      properties:
+        field: message
+        headerOutput: true
+        headerOutputName: message
     - ref:
         kind: Kamelet
         apiVersion: camel.apache.org/v1
         name: libre-translate-action
       properties:
-        text: "$simple{body}"
+        text: "$simple{header[message]}"
         host: "{{translate.service.host}}"
+        target: "{{translate.service.language}}"
+    - ref:
+        kind: Kamelet
+        apiVersion: camel.apache.org/v1
+        name: set-body-action
+      properties:
+        value: |
+          $simple{header[client]}: $simple{body}
   sink:
     ref:
       kind: Kamelet
