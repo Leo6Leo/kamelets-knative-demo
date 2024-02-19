@@ -1,0 +1,20 @@
+{
+  "services": [
+    {
+      "type": "event",
+      "name": "org.apache.camel.event.messages",
+      "endpointKind": "source",
+      "path": "/",
+      "objectApiVersion": "eventing.knative.dev/v1",
+      "objectKind": "Broker",
+      "objectName": "default",
+      "metadata": {
+        "camel.endpoint.kind": "source",
+        "knative.apiVersion": "eventing.knative.dev/v1",
+        "knative.kind": "Broker",
+        "knative.name": "default",
+        "knative.reply": "false"
+      }
+    }
+  ]
+}
